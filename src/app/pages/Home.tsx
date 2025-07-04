@@ -421,6 +421,13 @@ export default function Home() {
         <AnnouncementBar title="Sarkariresult">
           Sarkariresult: Data Presents To You All The Most Recent News Like Outcome, Online Structure, Naukri, Test Result 2025, Work Result, Information Hindi Test, Government Work Data, And Updates, Notice And Output Gives.
         </AnnouncementBar>
+        <AnnouncementBar title="SarkariResultsNow.in">
+          SarkariResultsNow.in is an independent portal dedicated to helping job seekers, students, and aspirants stay updated with the latest government job notifications, exam results, admit cards, answer keys, and current affairs.<br/>
+          <br/>
+          Our mission is to make public information more accessible by presenting updates from official government portals in a clean and organized format. We do not represent any government body, and all data shared here is sourced from publicly available and verified official announcements.<br/>
+          <br/>
+          If you have questions or concerns, feel free to contact us via the <a href="/contact" style={{textDecoration: 'underline', color: '#1a124d'}}>Contact</a> page.
+        </AnnouncementBar>
       </div>
       </div>
       <Footer />

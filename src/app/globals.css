@@ -39,3 +39,11 @@
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;     /* Firefox */
 }
+
+
+/* hover the news page images */
+@media (hover: hover) {
+  .hover\:scale-150:hover {
+    transform: scale(1.5);
+  }
+}

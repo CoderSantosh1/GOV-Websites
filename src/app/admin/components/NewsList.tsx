@@ -12,6 +12,18 @@ interface News {
   category: string;
   status: string;
   postedDate: string;
+  imageUrl?: string;
+  image?: string;
+}
+
+interface NewsFormData {
+  title: string;
+  content: string;
+  organization: string;
+  category: string;
+  status: string;
+  postedDate?: string;
+  image?: File | string;
 }
 
 export default function NewsList() {
@@ -48,15 +60,31 @@ export default function NewsList() {
     }
   };
 
-  const handleCreateNews = async (formData: Omit<News, '_id' | 'postedDate'>) => {
+  const handleCreateNews = async (formData: NewsFormData) => {
     if (isSubmitting) return;
 
     setIsSubmitting(true);
     try {
+      const data = new FormData();
+      data.append('title', formData.title);
+      data.append('content', formData.content);
+      data.append('organization', formData.organization);
+      data.append('category', formData.category);
+      data.append('status', formData.status);
+      if (
+        formData.image &&
+        typeof formData.image === 'object' &&
+        typeof (formData.image as File).size === 'number' &&
+        typeof (formData.image as File).type === 'string'
+      ) {
+        data.append('image', formData.image as File);
+      }
+      if ('postedDate' in formData && formData.postedDate) {
+        data.append('publishDate', formData.postedDate as string);
+      }
       const response = await fetch('/api/news', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: data,
       });
 
       if (response.ok) {
@@ -76,15 +104,31 @@ export default function NewsList() {
     }
   };
 
-  const handleUpdateNews = async (formData: Omit<News, '_id' | 'postedDate'>) => {
+  const handleUpdateNews = async (formData: NewsFormData) => {
     if (!selectedNews || isSubmitting) return;
 
     setIsSubmitting(true);
     try {
+      const data = new FormData();
+      data.append('title', formData.title);
+      data.append('content', formData.content);
+      data.append('organization', formData.organization);
+      data.append('category', formData.category);
+      data.append('status', formData.status);
+      if (
+        formData.image &&
+        typeof formData.image === 'object' &&
+        typeof (formData.image as File).size === 'number' &&
+        typeof (formData.image as File).type === 'string'
+      ) {
+        data.append('image', formData.image as File);
+      }
+      if ('postedDate' in formData && formData.postedDate) {
+        data.append('publishDate', formData.postedDate as string);
+      }
       const response = await fetch(`/api/news/${selectedNews._id}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: data,
       });
 
       if (response.ok) {
@@ -180,12 +224,21 @@ export default function NewsList() {
               key={item._id}
               className="bg-white p-4 rounded-lg shadow flex justify-between items-center"
             >
-              <div>
-                <h3 className="font-semibold">{item.title}</h3>
-                <p className="text-sm text-gray-600">{item.organization}</p>
-                <p className="text-sm text-gray-500">
-                  {new Date(item.postedDate).toLocaleDateString()}
-                </p>
+              <div className="flex items-center gap-4">
+                {item.imageUrl && (
+                  <img
+                    src={item.imageUrl}
+                    alt={item.title}
+                    className="w-16 h-16 object-contain rounded border shadow"
+                  />
+                )}
+                <div>
+                  <h3 className="font-semibold">{item.title}</h3>
+                  <p className="text-sm text-gray-600">{item.organization}</p>
+                  <p className="text-sm text-gray-500">
+                    {new Date(item.postedDate).toLocaleDateString()}
+                  </p>
+                </div>
               </div>
               <div className="flex gap-2">
                 <Button variant="outline" onClick={() => handleEdit(item)}>

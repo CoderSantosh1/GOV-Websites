@@ -22,6 +22,8 @@ interface NewsFormData {
   category: string;
   status: string;
   publishDate: string;
+  image?: File;
+  imagePreview?: string;
 }
 
 interface JobFormData {
@@ -182,6 +184,8 @@ export default function AdminDashboard() {
     status: 'published'
   });
 
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+
   if (!isLoggedIn) {
     return null;
   }
@@ -255,17 +259,26 @@ export default function AdminDashboard() {
     }
   };
 
-
-
   const handleNewsSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      const formData = new FormData();
+      formData.append('title', newsFormData.title);
+      formData.append('content', newsFormData.content);
+      formData.append('organization', newsFormData.organization);
+      formData.append('category', newsFormData.category);
+      formData.append('status', newsFormData.status);
+      formData.append('publishDate', newsFormData.publishDate);
+      if (newsFormData.image && newsFormData.image instanceof File) {
+        console.log('Appending image to FormData:', newsFormData.image);
+        formData.append('image', newsFormData.image);
+      } else {
+        console.log('No image selected or image is not a File:', newsFormData.image);
+      }
+
       const response = await fetch('/api/news', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newsFormData),
+        body: formData,
       });
 
       if (response.ok) {
@@ -276,8 +289,11 @@ export default function AdminDashboard() {
           organization: '',
           category: '',
           status: 'published',
-          publishDate: new Date().toISOString().split('T')[0]
+          publishDate: new Date().toISOString().split('T')[0],
+          image: undefined,
+          imagePreview: undefined,
         });
+        setImagePreview(null);
       } else {
         alert('Failed to post news');
       }
@@ -602,6 +618,27 @@ export default function AdminDashboard() {
                     <option value="published">Published</option>
                     <option value="draft">Draft</option>
                   </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-2">Image (optional)</label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) {
+                        setNewsFormData({ ...newsFormData, image: file });
+                        setImagePreview(URL.createObjectURL(file));
+                      }
+                    }}
+                    className="w-full p-2 border rounded-md"
+                  />
+                  {imagePreview && (
+                    <div className="mt-2">
+                      <img src={imagePreview} alt="Preview" className="max-h-40 rounded border" />
+                    </div>
+                  )}
                 </div>
 
                 <Button type="submit" className="w-full">Post News</Button>

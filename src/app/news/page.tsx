@@ -7,6 +7,8 @@ import Footer from "../../components/Footer";
 interface News {
   _id: string;
   title: string;
+  imageUrl?: string;
+  image?: string;
 }
 
 export default function NewsListPage() {
@@ -42,7 +44,14 @@ export default function NewsListPage() {
             <tbody>
               {news.map((news) => (
                 <tr key={news._id} className="border-t-2 border-red-500 bg-[#FFF8CC] ">
-                  <td className="p-2 border-x text-left align-top break-words whitespace-pre-wrap flex justify-center">
+                  <td className="p-2 border-x text-left align-top break-words whitespace-pre-wrap flex flex-col sm:flex-row items-center gap-2 justify-center">
+                    {(news.imageUrl || news.image) && (
+                      <img
+                        src={news.imageUrl || (news.image && (news.image.startsWith('http') || news.image.startsWith('data:') ? news.image : '/' + news.image.replace(/^\/+/g, '')))}
+                        alt={news.title}
+                        className="w-16 h-16 object-contain rounded border shadow mr-2"
+                      />
+                    )}
                     <a href={`/newss/${news._id}`} className="text-[#014F59] hover:underline hover:text-blue-800">
                       {news.title}
                     </a>

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import Navbar from "../../../components/Header";
+import Navbar from '../../../components/Header';
 import Footer from '@/components/Footer';
 
 interface News {
@@ -13,6 +13,8 @@ interface News {
   category: string;
   postedDate: string;
   status: string;
+  image?: string;
+  imageUrl?: string;
 }
 
 export default function NewsDetail() {
@@ -29,7 +31,7 @@ export default function NewsDetail() {
       try {
         setLoading(true);
         setError('');
-        
+
         if (!params || !params.id) {
           setError('Invalid parameters');
           setLoading(false);
@@ -39,21 +41,23 @@ export default function NewsDetail() {
         const response = await fetch(`/api/news/${params.id}`);
         if (!response.ok) {
           const errorText = await response.text();
-          throw new Error(response.status === 404 ? 'News not found' : errorText || 'Failed to fetch news details');
+          throw new Error(
+            response.status === 404 ? 'News not found' : errorText || 'Failed to fetch news details'
+          );
         }
-        
+
         const data = await response.json();
         if (!data.data) {
           throw new Error('News data is missing');
         }
-        
+
         setNews(data.data);
         setRetryCount(0);
       } catch (err) {
         console.error('Error fetching news:', err);
         const errorMessage = err instanceof Error ? err.message : 'Error fetching news details';
         setError(errorMessage);
-        
+
         if (retryCount < maxRetries) {
           setRetryCount(prev => prev + 1);
           setTimeout(() => fetchNews(), 1000 * (retryCount + 1));
@@ -67,7 +71,7 @@ export default function NewsDetail() {
     if (params?.id) {
       fetchNews();
     }
-  }, [params?.id, retryCount, maxRetries]);
+  }, [params?.id, retryCount]);
 
   if (loading) {
     return (
@@ -121,32 +125,41 @@ export default function NewsDetail() {
   return (
     <>
       <Navbar />
-      <div className="container mx-auto px-4 py-8">
-        <div className="max-w-7xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
-          <div className="p-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-4">{news.title}</h1>
-            <div className="flex items-center text-gray-600 mb-6">
-              <span className="mr-4">{news.organization}</span>
-              <span className="mr-4">•</span>
-              <span>{new Date(news.postedDate).toLocaleDateString()}</span>
+      <div className="container max-w-7xl mx-auto px-4 py-8">
+        <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+          <div className="p-4 sm:p-8">
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">{news.title}</h1>
+            <div className="text-gray-600 mb-2">{news.organization}</div>
+            <div className="text-sm text-red-500 mb-6">
+              Posted Date: {new Date(news.postedDate).toLocaleDateString()}
             </div>
 
-            <div className="mb-8">
-              <div className="prose max-w-none text-gray-700 whitespace-pre-line">
-                {news.content}
+            
+
+            {/* News Content */}
+            <div className="prose max-w-none text-gray-700 whitespace-pre-line">
+              {news.content}
+            </div>
+          {/* Image Display - Fully Responsive and Scales on Hover for Desktop */}
+          {news.imageUrl && (
+            <div className="mb-6 flex justify-center">
+              <div className="w-full sm:w-auto max-w-full overflow-hidden rounded border shadow transition-transform duration-300 hover:scale-105">
+                <img
+                  src={news.imageUrl}
+                  alt={news.title}
+                  className="w-full h-auto object-contain"
+                />
               </div>
             </div>
-
+          )}
+            {/* Back Button */}
             <div className="flex justify-between items-center mt-8">
               <button
                 onClick={() => router.back()}
-                className="text-gray-600 hover:text-gray-900"
+                className="text-blue-600 hover:text-blue-800"
               >
-                ← 
+                ← Back to Home
               </button>
-              <div className="text-sm text-gray-500">
-                Category: {news.category}
-              </div>
             </div>
           </div>
         </div>

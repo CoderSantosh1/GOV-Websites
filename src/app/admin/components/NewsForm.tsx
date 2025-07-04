@@ -11,11 +11,13 @@ interface NewsFormData {
   organization: string;
   category: string;
   status: string;
+  image?: string | File;
+  imageUrl?: string;
 }
 
 interface NewsFormProps {
   initialData?: NewsFormData;
-  onSubmit: (data: NewsFormData) => void;
+  onSubmit: (data: NewsFormData) => void | Promise<void>;
   onCancel: () => void;
 }
 
@@ -27,14 +29,45 @@ export default function NewsForm({ initialData, onSubmit, onCancel }: NewsFormPr
     organization: initialData?.organization || '',
     category: initialData?.category || '',
     status: initialData?.status || 'draft',
+    image: initialData?.image || '',
+    imageUrl: initialData?.imageUrl || '',
   });
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string>('');
 
   const [errors, setErrors] = useState<Partial<NewsFormData>>({});
   const [isFormValid, setIsFormValid] = useState(false);
 
   useEffect(() => {
     validateForm();
-  }, [formData]);
+    // Show preview for existing image if editing
+    if (initialData?.imageUrl) {
+      setImagePreview(initialData.imageUrl);
+    } else if (initialData?.image) {
+      if (typeof initialData.image === 'string') {
+        // If it's already a full URL, use as is. If it's a relative path, prepend base path.
+        const isFullUrl = initialData.image.startsWith('http') || initialData.image.startsWith('data:');
+        setImagePreview(isFullUrl ? initialData.image : '/' + initialData.image.replace(/^\/+/g, ''));
+      } else if (
+        typeof initialData.image === 'object' &&
+        'data' in initialData.image &&
+        'contentType' in initialData.image &&
+        initialData.image.data &&
+        initialData.image.contentType
+      ) {
+        // Convert Buffer to base64 string for preview
+        let base64 = '';
+        if (Array.isArray(initialData.image.data)) {
+          base64 = btoa(String.fromCharCode(...new Uint8Array(initialData.image.data)));
+        } else if (typeof initialData.image.data === 'string') {
+          base64 = initialData.image.data;
+        }
+        setImagePreview(`data:${initialData.image.contentType};base64,${base64}`);
+      }
+    } else {
+      setImagePreview('');
+    }
+  }, [formData, initialData]);
 
   const validateForm = () => {
     const newErrors: Partial<NewsFormData> = {};
@@ -59,13 +92,23 @@ export default function NewsForm({ initialData, onSubmit, onCancel }: NewsFormPr
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setImageFile(file);
+      setImagePreview(URL.createObjectURL(file));
+      setFormData(prev => ({ ...prev, image: file }));
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (isSubmitting || !validateForm()) return;
 
     setIsSubmitting(true);
     try {
-      await onSubmit(formData);
+      console.log('Submitting formData.image:', formData.image); // Debug log
+      await onSubmit({ ...formData, image: imageFile || formData.image });
     } finally {
       setIsSubmitting(false);
     }
@@ -137,6 +180,23 @@ export default function NewsForm({ initialData, onSubmit, onCancel }: NewsFormPr
             <option value="draft">Draft</option>
             <option value="published">Published</option>
           </Select>
+        </div>
+
+        <div>
+          <label htmlFor="image" className="block text-sm font-medium text-gray-700">Image (optional)</label>
+          <input
+            id="image"
+            name="image"
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-gray-50 file:text-gray-700 hover:file:bg-gray-100"
+          />
+          {imagePreview && (
+            <div className="mt-2">
+              <img src={imagePreview} alt="Preview" className="max-h-40 rounded border" />
+            </div>
+          )}
         </div>
 
         <div className="flex justify-end space-x-2 pt-4 border-t mt-6">

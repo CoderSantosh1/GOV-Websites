@@ -31,6 +31,9 @@ export default function Footer() {
             <p className="text-gray-700 mb-2">email: <a href="mailto:sarkariresultsnow.com">support@sarkariresultsnow.com</a></p>
             
             <div className="flex space-x-6">
+            <a href="https://chat.whatsapp.com/KQjW6a9HlDw8HAba4v3LBU" className="text-blue-600 hover:text-blue-800">
+                <Image src="/whatspp.png" alt="Whatsapp" width={24} height={24} />
+              </a>
             <a href="https://t.me/+edSF3XKgzRU0MTY1" className="text-blue-600 hover:text-blue-800">
                 <Image src="/telegram.png" alt="Telogram" width={24} height={24} />
               </a>
@@ -39,10 +42,7 @@ export default function Footer() {
               </a>
               <a href="https://www.instagram.com/sarkariresultsnow/" className="text-blue-600 hover:text-blue-800">
                 <Image src="/insta.png" alt="Instagram" width={24} height={24} />
-              </a>
-              <a href="#" className="text-blue-600 hover:text-blue-800">
-                <Image src="/whatspp.png" alt="Whatsapp" width={24} height={24} />
-              </a>
+              </a>             
             </div>
           </div>
         </div>

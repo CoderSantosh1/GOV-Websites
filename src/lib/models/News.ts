@@ -26,6 +26,10 @@ const newsSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  image: {
+    data: Buffer,
+    contentType: String,
+  },
 });
 
 const News = mongoose.models.News || mongoose.model('News', newsSchema);
