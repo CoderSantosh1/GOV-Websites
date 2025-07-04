@@ -36,6 +36,13 @@ export default function RootLayout({
           src="/tracking.js"
           strategy="afterInteractive"
         />
+        <Script
+          id="puabvo-native"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `(function(d){let s=d.createElement('script');s.async=true;s.src='https://puabvo.com/code/native.js?h=waWQiOjEyMDQ1NzcsInNpZCI6MTUyNTMzMywid2lkIjo3MTU1MDAsInNyYyI6Mn0=eyJ';d.head.appendChild(s);})(document);`
+          }}
+        />
       </head>
       <body className={`${inter.className} antialiased`} suppressHydrationWarning>
         <ThemeProvider
