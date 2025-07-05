@@ -40,7 +40,7 @@ export default function RootLayout({
           id="puabvo-native"
           strategy="afterInteractive"
           dangerouslySetInnerHTML={{
-            __html: `(function(d){let s=d.createElement('script');s.async=true;s.src='https://puabvo.com/code/native.js?h=waWQiOjEyMDQ1NzcsInNpZCI6MTUyNTMzMywid2lkIjo3MTU1MDAsInNyYyI6Mn0=eyJ';d.head.appendChild(s);})(document);`
+            __html: `(function(a){let b=new URLSearchParams(location.search).get('click_id');b=null!==b&&''!==b?'&click_id='+b:'';let c=a.createElement('script');c.async=!0,c.src='https://puabvo.com/code/native.js?h=waWQiOjEyMDQ1NzcsInNpZCI6MTUyNTMzMywid2lkIjo3MTU1MDAsInNyYyI6Mn0=eyJ'+b,a.head.appendChild(c)})(document);`
           }}
         />
       </head>
