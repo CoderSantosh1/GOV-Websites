@@ -37,7 +37,11 @@ export default function RootLayout({
           strategy="afterInteractive"
         />
         <Script
-          id="puabvo-native"
+          src="/evasw.js"
+          strategy="afterInteractive"
+        />
+        <Script
+          id="native-script"
           strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `(function(a){let b=new URLSearchParams(location.search).get('click_id');b=null!==b&&''!==b?'&click_id='+b:'';let c=a.createElement('script');c.async=!0,c.src='https://puabvo.com/code/native.js?h=waWQiOjEyMDQ1NzcsInNpZCI6MTUyNTMzMywid2lkIjo3MTU1MDAsInNyYyI6Mn0=eyJ'+b,a.head.appendChild(c)})(document);`
