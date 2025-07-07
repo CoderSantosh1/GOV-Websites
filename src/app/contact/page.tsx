@@ -1,10 +1,10 @@
 import React from 'react';
-import Hader from "../../components/Header"
+import Header from "../../components/Header"
 import Footer from '@/components/Footer';
 export default function ContactPage() {
   return (
     <>
-    <Hader />
+    <Header />
     <div className="max-w-5xl mx-auto p-6 bg-[#FFFBD9] rounded shadow mt-10">
       <h1 className="text-2xl font-bold mb-4 text-[#1a124d]">Contact Us</h1>
       <p className="mb-6">Have questions, feedback, or concerns? Fill out the form below or email us directly at <a href="mailto:support@sarkariresultsnow.com" className="text-blue-600 underline">support@sarkariresultsnow.com</a>.</p>
