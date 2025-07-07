@@ -26,27 +26,8 @@ export default function RootLayout({
       <head>
         <meta name="google-adsense-account" content="ca-pub-7649078598124252" />
         <link rel="icon" type="image/png" href="/logo-color-new.png" />
-        <Script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7649078598124252"
-          crossOrigin="anonymous"
-          strategy="afterInteractive"
-        />
-        <Script
-          src="/tracking.js"
-          strategy="afterInteractive"
-        />
-        <Script
-          src="/evasw.js"
-          strategy="afterInteractive"
-        />
-        <Script
-          id="native-script"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `(function(a){let b=new URLSearchParams(location.search).get('click_id');b=null!==b&&''!==b?'&click_id='+b:'';let c=a.createElement('script');c.async=!0,c.src='https://puabvo.com/code/native.js?h=waWQiOjEyMDQ1NzcsInNpZCI6MTUyNTMzMywid2lkIjo3MTU1MDAsInNyYyI6Mn0=eyJ'+b,a.head.appendChild(c)})(document);`
-          }}
-        />
+        <script type='text/javascript' src='//pl27100255.profitableratecpm.com/ab/a6/56/aba656ae39eb4c3fb8141ffacf6c8c37.js'></script>
+        <link rel="preconnect" href="https://www.profitableratecpm.com/fgcgnry41m?key=a2f61fd6d61f9bf39064b7bb60e2aa4e " />
       </head>
       <body className={`${inter.className} antialiased`} suppressHydrationWarning>
         <ThemeProvider
