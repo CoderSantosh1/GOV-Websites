@@ -27,7 +27,7 @@ export default function RootLayout({
         <meta name="google-adsense-account" content="ca-pub-7649078598124252" />
         <link rel="icon" type="image/png" href="/logo-color-new.png" />
         <script type='text/javascript' src='//pl27100255.profitableratecpm.com/ab/a6/56/aba656ae39eb4c3fb8141ffacf6c8c37.js'></script>
-        <link rel="preconnect" href="https://www.profitableratecpm.com/fgcgnry41m?key=a2f61fd6d61f9bf39064b7bb60e2aa4e " />
+        <link rel="preconnect" href="https://www.profitableratecpm.com/bgbqa8gx4?key=35d5773405121cb7a47669d59a988662" />
       </head>
       <body className={`${inter.className} antialiased`} suppressHydrationWarning>
         <ThemeProvider
@@ -36,6 +36,8 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <Script async data-cfasync="false" src="//pl27100315.profitableratecpm.com/1102a47cc48fb96e807695825f07ed3e/invoke.js" strategy="afterInteractive" />
+         
           {children}
           <SpeedInsights />
           <Analytics />
