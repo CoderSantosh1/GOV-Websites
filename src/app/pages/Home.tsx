@@ -236,7 +236,7 @@ export default function Home() {
                             </thead>
                             <tbody>
                               {Array.from({ length: Math.min(10, Math.max(results.length, jobs.length, news.length)) }).map((_, index) => (
-                                <tr key={index} className="border-t-2 border-red-500 hover:bg-[#FFF8CC]">
+                                <tr key={index} className="border-t-2 border-red-500 hover:bg-[#fdfefe]">
                                   <td className="p-2 border-x text-left align-top break-words whitespace-pre-wrap">
                                     {results[index] ? (
                                       <a href={`/results/${results[index]._id}`} className="text-[#014F59] hover:underline hover:text-blue-800">
