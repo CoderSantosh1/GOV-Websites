@@ -25,6 +25,7 @@ export default function Header() {
           <Link href="/admit-cards" className="text-[#000000] hover:text-blue-800 font-medium">Admit Card</Link>
           <Link href="/answer-keys" className="text-[#000000] hover:text-blue-800 font-medium">Answer Key</Link>
           <Link href="/contact" className="text-[#000000]hover:text-blue-800 font-medium">Contact Us</Link>
+          <Link href="/profile">Profile</Link>
         </nav>
       </div>
     </header>

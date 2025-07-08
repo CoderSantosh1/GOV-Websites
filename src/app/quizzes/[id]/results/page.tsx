@@ -535,6 +535,15 @@ export default function QuizResults({ params }: { params: { id: string } }) {
           </CardContent>
         </div>
       </div>
+
+      {/* Add Go to Profile button at the bottom */}
+      <div className="flex justify-center mt-8">
+        <Link href="/profile">
+          <Button className="bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-500 hover:to-blue-600 text-black font-bold px-6 py-3 text-lg">
+            Go to Profile
+          </Button>
+        </Link>
+      </div>
     </div>
   )
 }
