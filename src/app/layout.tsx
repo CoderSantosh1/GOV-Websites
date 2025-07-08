@@ -25,7 +25,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <meta name="google-adsense-account" content="ca-pub-7649078598124252" />
-        <link rel="icon" type="image/png" href="/logo-color-new.png" />
+        <link rel="icon" type="image/png" href="/logo-color-new.jpg" />
         <script type='text/javascript' src='//pl27100255.profitableratecpm.com/ab/a6/56/aba656ae39eb4c3fb8141ffacf6c8c37.js'></script>
         <link rel="preconnect" href="https://www.profitableratecpm.com/bgbqa8gx4?key=35d5773405121cb7a47669d59a988662" />
       </head>
