@@ -10,7 +10,7 @@ const AnnouncementBar: React.FC<AnnouncementBarProps> = ({ title, children }) =>
     <div className=" text-red-500 text-2xl md:text-3xl font-bold text-center py-2 rounded-t">
       {title}
     </div>
-    <div className="bg-white text-black text-base md:text-lg px-4 py-3 border border-[#a10d16] border-t-0 rounded-b shadow">
+    <div className="bg-white text-black text-base md:text-lg px-4 py-3 border border-[#f6f7f4] border-t-0 rounded-b shadow">
       {children}
     </div>
   </div>

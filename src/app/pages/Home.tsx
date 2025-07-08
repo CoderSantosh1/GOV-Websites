@@ -143,8 +143,8 @@ export default function Home() {
   return (
     <>
       <Header />
-      <div className="bg-[#1a124d]">
-      <main className="flex flex-col items-center justify-center bg-[#FFFBD9] w-full max-w-7xl mx-auto px-2 sm:px-4">
+      <div className="bg-[#f5f7f2]">
+      <main className="flex flex-col items-center justify-center bg-[#f5f7f2] w-full max-w-7xl mx-auto px-2 sm:px-4">
                 <div className="w-full space-y-6 py-4">
 
                 <div className="w-full  overflow-hidden">
@@ -223,7 +223,7 @@ export default function Home() {
                 </div>
 
       
-                {/* Section 1: Results / Jobs / News */}
+            
                  <div className="w-full">
                         <div className="w-full overflow-x-auto hide-scrollbar">
                           <table className="w-full table-fixed border-collapse border border-orange-500 text-xs sm:text-sm md:text-base">
@@ -297,7 +297,7 @@ export default function Home() {
                         </thead>
                         <tbody>
                           {Array.from({ length: Math.min(10, Math.max(admitCards.length, answerKeys.length, admissions.length)) }).map((_, index) => (
-                            <tr key={index} className="border-t-2 border-red-500 hover:bg-[#FFF8CC]">
+                            <tr key={index} className="border-t-2 border-red-500 hover:bg-[#f5f7f2]">
                               <td className="p-2 border-x text-left align-top break-words whitespace-pre-wrap">
                                 {admitCards[index] ? (
                                   <a href={`/admit-cards/${admitCards[index]._id}`} className="text-[#014F59] hover:underline hover:text-blue-800">
@@ -366,14 +366,14 @@ export default function Home() {
                         ) : (
                           <div className="w-full mt-6">
                             <div className="bg-white border border-orange-500 rounded-md overflow-hidden shadow-sm w-full">
-                              <div className="bg-red-600 text-[#FCFCD8] font-bold text-sm sm:text-base py-2 px-4 text-center w-full">
+                              <div className="bg-red-600 text-[#f5f7f2] font-bold text-sm sm:text-base py-2 px-4 text-center w-full">
                                 Free Test Series for All Government Exams
                               </div>
                               <ul className="divide-y divide-orange-300">
                                 {quizzes.slice(0, 6).map((quiz) => (
                                   <li
                                     key={quiz._id}
-                                    className="py-3 px-4 bg-[#FFF8CC] text-center break-words w-full"
+                                    className="py-3 px-4 bg-[#f5f7f2] text-center break-words w-full"
                                   >
                                     <a
                                       href={`/quizzes`}
@@ -404,8 +404,8 @@ export default function Home() {
               
 
        {/* Announcement Bars */}
-       <div className="bg-[#1a124d] mb-4">
-      <div className="flex flex-col items-center  justify-center bg-[#FFFBD9]  w-10/14 max-w-7xl mx-auto px-4 ">
+       <div className="bg-[#f5f7f2] mb-4">
+      <div className="flex flex-col items-center  justify-center bg-[#f5f7f2]  w-10/14 max-w-7xl mx-auto px-4 ">
         <AnnouncementBar title="Sarkari Results 10+2 Latest Job">
           Most Recent Sarkari Work, Sarkari Test Result, Most Recent On The Web And Disconnected Structure, Concede Card, Prospectus, Affirmation, Ansawer Key, Grant, Notice Etc.If You Need To Get Refreshes Connected With Sarkari Occupations On Sarkari Result.Com.Cm Like Concede Warning Like Govt. Test, Sarkari Result, Most Recent Bord Result, Bihar Result Tenth And So On You Could Sarkari Result 10+2 Most Recent Occupation At Any Point Website Page Consistently.
         </AnnouncementBar>
