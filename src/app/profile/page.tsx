@@ -263,38 +263,8 @@ const ProfilePage: React.FC = () => {
         ))}
       </div>
 
-      <div className="container mx-auto py-8 px-4 relative z-10 max-w-7xl">
-        {/* Header Section */}
-        <div className="flex items-center justify-between mb-8">
-          <div className="flex items-center gap-4">
-            {/* <Button
-              onClick={() => (window.location.href = "/quizzes")}
-              className="border-2 border-cyan-400 text-cyan-400 bg-transparent hover:bg-cyan-400/10 font-bold px-6 py-3"
-            >
-              ← BACk To Results Page
-            </Button> */}
-
-            
-          </div>
-
-          <div className="flex items-center gap-3">
-            {/* <Button
-              onClick={handleRefresh}
-              disabled={refreshing}
-              className="border-2 border-yellow-400 text-yellow-400 bg-transparent hover:bg-yellow-400/10 font-bold px-4 py-3"
-            >
-              <RefreshCw className={`w-4 h-4 mr-2 ${refreshing ? "animate-spin" : ""}`} />
-              Refresh profile
-            </Button> */}
-            <Button
-              onClick={handleLogout}
-              className="border-2 border-red-400 text-red-400 bg-transparent hover:bg-red-400/10 font-bold px-4 py-3"
-            >
-              <LogOut className="w-4 h-4 mr-2" />
-              Logout
-            </Button>
-          </div>
-        </div>
+      <div className="container mx-auto   max-w-7xl md:max-w-full">
+        
 
         {/* Main Profile Container */}
         <div
@@ -486,23 +456,36 @@ const ProfilePage: React.FC = () => {
                     <div className="absolute inset-0 bg-magenta-400/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10" />
                   </div>
                 </div>
-
+                <div className="flex items-center gap-3">
+            {/* <Button
+              onClick={handleRefresh}
+              disabled={refreshing}
+              className="border-2 border-yellow-400 text-yellow-400 bg-transparent hover:bg-yellow-400/10 font-bold px-4 py-3"
+            >
+              <RefreshCw className={`w-4 h-4 mr-2 ${refreshing ? "animate-spin" : ""}`} />
+              Refresh profile
+            </Button> */}
+            <Button
+              onClick={handleLogout}
+              className="border-2 border-red-400 text-red-400 bg-transparent hover:bg-red-400/10 font-bold px-4 py-3"
+            >
+              <LogOut className="w-4 h-4 mr-2" />
+              Logout
+            </Button>
+              </div>
                 {/* Test Results Section */}
                 <div className="space-y-6">
-                  <div className="flex flex-col items-center mb-6">
-                    <h2 className="text-2xl font-black text-center flex items-center justify-center gap-3">
-                      <Brain className="w-8 h-8 text-magenta-400 animate-pulse" />
-                      <span className="bg-gradient-to-r from-magenta-400 to-purple-400 bg-clip-text text-transparent">
-                        All Test Results
-                      </span>
-                    </h2>
+                  
+                      <span className="text-red-600 font-semibold">
+                       Your Previous Test Results
+                      </span> 
                     <Button
                       className="mt-2 bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-500 hover:to-blue-600 text-black font-bold px-6 py-2"
                       onClick={() => setShowHistory((prev) => !prev)}
                     >
                       {showHistory ? "Hide Test History" : "Show Test History"}
                     </Button>
-                  </div>
+                  
 
                   {showHistory && (
                     attempts.length === 0 ? (
@@ -599,7 +582,7 @@ const ProfilePage: React.FC = () => {
                   <h2 className="text-2xl font-black text-center mb-6 flex items-center justify-center gap-3">
                     <BookOpen className="w-8 h-8 text-cyan-400 animate-pulse" />
                     <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-                      Available Neural Tests
+                      Available All Tests 
                     </span>
                   </h2>
 

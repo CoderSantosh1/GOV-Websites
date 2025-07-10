@@ -24,8 +24,13 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <meta name="google-site-verification" content="KpO7IT-JrAfXS5vKDai0XcwaVUS-JzRDwsl1kBtfoyI" />
         <meta name="google-adsense-account" content="ca-pub-7649078598124252" />
         <link rel="icon" type="image/png" href="/logo-color-new.jpg" />
+        <meta property="og:title" content="Sarkariresultsnow - Latest Govt Job Results, Admit Cards & News" />
+        <meta property="og:description" content="Get the latest updates on government job results, admit cards, sarkari news, and more. Stay informed with Sarkariresultsnow for all your govt job needs." />
+        <meta property="og:image" content="https://www.sarkariresultsnow.com/og-image.png" />
+        <meta property="og:url" content="https://www.sarkariresultsnow.com/" />
         <script type='text/javascript' src='//pl27100255.profitableratecpm.com/ab/a6/56/aba656ae39eb4c3fb8141ffacf6c8c37.js'></script>
         <link rel="preconnect" href="https://www.profitableratecpm.com/bgbqa8gx4?key=35d5773405121cb7a47669d59a988662" />
       </head>
