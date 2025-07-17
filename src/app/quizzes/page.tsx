@@ -95,7 +95,7 @@ const translations = {
     selectLanguage: "भाषा चुनें",
     languageChanged: "भाषा सफलतापूर्वक बदल दी गई!",
     noQuizzes: "कोई प्रश्नोत्तरी उपलब्ध नहीं",
-    noQuizzesDesc: "इस समय कोई प्रश्नोत्तरी उपलब्ध नहीं है।",
+    noQuizzesDesc: "इस समय कोई प्रश्नोत्तरी उपलब्ध नहीं है COMMING SOON....।",
     loading: "लोड हो रहा है...",
   },
  
