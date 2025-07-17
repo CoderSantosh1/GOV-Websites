@@ -23,6 +23,16 @@ const quizSchema = new mongoose.Schema(
       default: 0,
       min: 0,
     },
+    category: {
+      type: String,
+      required: [true, 'Category is required'],
+      trim: true,
+    },
+    subcategory: {
+      type: String,
+      required: [true, 'Subcategory is required'],
+      trim: true,
+    },
     questions: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: "Question",

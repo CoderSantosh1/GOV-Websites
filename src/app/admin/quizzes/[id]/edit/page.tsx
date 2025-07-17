@@ -9,6 +9,13 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
 
+// Add types for categories
+interface Category {
+  _id: string;
+  name: string;
+  subcategories: { name: string; icon?: string }[];
+}
+
 interface Question {
   _id?: string;
   text: string;
@@ -23,6 +30,8 @@ interface Quiz {
   timeLimit: number;
   totalMarks: number;
   questions: Question[];
+  category?: string;
+  subcategory?: string;
 }
 
 export default function EditQuiz({ params }: { params: { id: string } }) {
@@ -30,10 +39,22 @@ export default function EditQuiz({ params }: { params: { id: string } }) {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [quiz, setQuiz] = useState<Quiz | null>(null);
+  // Add state for categories and subcategories
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [subcategoryOptions, setSubcategoryOptions] = useState<string[]>([]);
 
   useEffect(() => {
     fetchQuiz();
+    fetchCategories();
   }, [params.id]);
+
+  useEffect(() => {
+    // When quiz or categories change, update subcategory options
+    if (quiz && categories.length > 0 && quiz.category) {
+      const found = categories.find((cat) => cat.name === quiz.category);
+      setSubcategoryOptions(found ? found.subcategories.map(sub => typeof sub === 'object' && sub !== null ? sub.name : sub) : []);
+    }
+  }, [quiz, categories]);
 
   const fetchQuiz = async () => {
     try {
@@ -51,9 +72,35 @@ export default function EditQuiz({ params }: { params: { id: string } }) {
     }
   };
 
+  const fetchCategories = async () => {
+    try {
+      const response = await fetch('/api/quiz-categories');
+      if (!response.ok) throw new Error('Failed to fetch categories');
+      const data = await response.json();
+      setCategories(data);
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+      toast.error('Failed to fetch categories');
+    }
+  };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
     setQuiz(prev => prev ? { ...prev, [name]: type === 'number' ? Number(value) : value } : null);
+  };
+
+  // Add handler for category change
+  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value;
+    setQuiz(prev => prev ? { ...prev, category: value, subcategory: '' } : null);
+    const found = categories.find((cat) => cat.name === value);
+    setSubcategoryOptions(found ? found.subcategories.map(sub => typeof sub === 'object' && sub !== null ? sub.name : sub) : []);
+  };
+
+  // Add handler for subcategory change
+  const handleSubcategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value;
+    setQuiz(prev => prev ? { ...prev, subcategory: value } : null);
   };
 
   const handleQuestionChange = (index: number, field: string, value: string) => {
@@ -198,6 +245,42 @@ export default function EditQuiz({ params }: { params: { id: string } }) {
                   placeholder="Enter quiz description"
                   required
                 />
+              </div>
+
+              {/* Category Dropdown */}
+              <div>
+                <Label htmlFor="category">Category</Label>
+                <select
+                  id="category"
+                  name="category"
+                  value={quiz.category || ''}
+                  onChange={handleCategoryChange}
+                  className="w-full border rounded p-2"
+                  required
+                >
+                  <option value="">Select category</option>
+                  {categories.map((cat) => (
+                    <option key={cat._id} value={typeof cat.name === 'string' ? cat.name : ''}>{typeof cat.name === 'string' ? cat.name : '[Invalid name]'}</option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Subcategory Dropdown */}
+              <div>
+                <Label htmlFor="subcategory">Subcategory</Label>
+                <select
+                  id="subcategory"
+                  name="subcategory"
+                  value={quiz.subcategory || ''}
+                  onChange={handleSubcategoryChange}
+                  className="w-full border rounded p-2"
+                  required
+                >
+                  <option value="">Select subcategory</option>
+                  {subcategoryOptions.map((sub) => (
+                    <option key={typeof sub === 'string' ? sub : ''} value={typeof sub === 'string' ? sub : ''}>{typeof sub === 'string' ? sub : '[Invalid name]'}</option>
+                  ))}
+                </select>
               </div>
 
               <div>

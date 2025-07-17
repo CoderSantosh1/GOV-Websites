@@ -32,8 +32,7 @@ export default function RootLayout({
         <meta property="og:image" content="https://www.sarkariresultsnow.com/og-image.png" />
         <meta property="og:url" content="https://www.sarkariresultsnow.com/" />
         <meta name="description" content="SarkariResultsNow provides all Sarkari Result, Admit Card, Government Jobs and Latest Notifications." />
-        <script type='text/javascript' src='//pl27100255.profitableratecpm.com/ab/a6/56/aba656ae39eb4c3fb8141ffacf6c8c37.js'></script>
-        <link rel="preconnect" href="https://www.profitableratecpm.com/bgbqa8gx4?key=35d5773405121cb7a47669d59a988662" />
+       
       </head>
       <body className={`${inter.className} antialiased`} suppressHydrationWarning>
         <ThemeProvider
@@ -42,8 +41,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Script async data-cfasync="false" src="//pl27100315.profitableratecpm.com/1102a47cc48fb96e807695825f07ed3e/invoke.js" strategy="afterInteractive" />
-         
+        
           {children}
           <SpeedInsights />
           <Analytics />

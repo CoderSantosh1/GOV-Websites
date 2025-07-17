@@ -370,7 +370,7 @@ export default function Home() {
                                 Free Test Series for All Government Exams
                               </div>
                               <ul className="divide-y divide-orange-300">
-                                {quizzes.slice(0, 6).map((quiz) => (
+                                {quizzes.slice(0, 10).map((quiz) => (
                                   <li
                                     key={quiz._id}
                                     className="py-3 px-4 bg-[#f5f7f2] text-center break-words w-full"

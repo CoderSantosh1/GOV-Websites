@@ -7,12 +7,14 @@ export async function POST(request: Request) {
   try {
     await connectDB();
     const body = await request.json();
-    const { title, description, timeLimit, totalMarks, questions } = body;
+    const { title, description, category, subcategory, timeLimit, totalMarks, questions } = body;
 
     // Create quiz first
     const quiz = await Quiz.create({
       title,
       description,
+      category,
+      subcategory,
       timeLimit,
       totalMarks,
       questions: [], // Initialize with empty questions array

@@ -14,6 +14,7 @@ import AdmissionList from './components/AdmissionList';
 import JobForm from './components/JobForm'; 
 import QuizForm from './components/QuizForm';
 import QuizList from './components/QuizList';
+import CategoryManager from './components/CategoryManager';
 
 interface NewsFormData {
   title: string;
@@ -73,7 +74,7 @@ interface ResultFormData {
   status: string;
 }
 
-type TabType = 'jobs' | 'results' | 'admit-cards' | 'news' | 'answer-keys' | 'admissions' | 'quizzes';
+type TabType = 'jobs' | 'results' | 'admit-cards' | 'news' | 'answer-keys' | 'admissions' | 'quizzes' | 'categories';
 
 export default function AdminDashboard() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -403,6 +404,7 @@ export default function AdminDashboard() {
     { id: 'answer-keys' as TabType, label: 'Answer Keys' },
     { id: 'admissions' as TabType, label: 'Admissions' },
     { id: 'quizzes' as TabType, label: 'Quizzes' },
+    { id: 'categories' as TabType, label: 'Categories' },
   ];
 
   return (
@@ -808,6 +810,11 @@ export default function AdminDashboard() {
             </div>
           </div>
         </>
+      )}
+      {activeTab === 'categories' && (
+        <div className="bg-white rounded-lg shadow-lg p-6">
+          <CategoryManager />
+        </div>
       )}
     </div>
   );

@@ -45,6 +45,8 @@ export async function PUT(
       {
         title: quizData.title,
         description: quizData.description,
+        category: quizData.category,
+        subcategory: quizData.subcategory,
         timeLimit: quizData.timeLimit,
         totalMarks: quizData.totalMarks || 0,
       },

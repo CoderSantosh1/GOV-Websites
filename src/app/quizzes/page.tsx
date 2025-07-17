@@ -1,7 +1,7 @@
 "use client"
 import Footer from "@/components/Footer"
 import Header from "@/components/Header"
-import { useEffect, useState } from "react"
+import { useEffect, useState, Suspense } from "react"
 import Link from "next/link"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -9,6 +9,7 @@ import { toast } from "sonner"
 import { Clock, FileText, Trophy, ArrowRight, Sparkles, UserIcon, LogOut, Globe, CheckCircle2 } from "lucide-react"
 import AuthModal from "@/components/AuthModal"
 import { useRouter } from "next/navigation"
+import { useSearchParams } from "next/navigation";
 import { Select } from "@/components/ui/select"
 
 interface Question {
@@ -38,6 +39,8 @@ interface Quiz {
   }>
   createdAt?: string
   updatedAt?: string
+  category: string;
+  subcategory: string;
 }
 
 interface Language {
@@ -98,13 +101,16 @@ const translations = {
  
 }
 
-export default function QuizList() {
+function QuizListContent() {
   const [quizzes, setQuizzes] = useState<Quiz[]>([])
   const [loading, setLoading] = useState(true)
   const [loggedInUser, setLoggedInUser] = useState<{ _id: string; name: string; mobile: string } | null>(null)
   const [currentLanguage, setCurrentLanguage] = useState<string>("en")
   const [languageLoading, setLanguageLoading] = useState(false)
   const router = useRouter()
+  const searchParams = useSearchParams();
+  const category = searchParams?.get("category");
+  const subcategory = searchParams?.get("subcategory");
 
   // Get current translations
   const t = translations[currentLanguage as keyof typeof translations] || translations.en
@@ -203,6 +209,16 @@ export default function QuizList() {
     }
   }
 
+  // Filter quizzes based on category and subcategory
+  const filteredQuizzes = quizzes.filter((quiz) => {
+    if (category && subcategory) {
+      return quiz.category === category && quiz.subcategory === subcategory;
+    } else if (category) {
+      return quiz.category === category;
+    }
+    return true;
+  });
+
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-[#1a124d]">
@@ -214,14 +230,18 @@ export default function QuizList() {
     )
   }
 
-  if (quizzes.length === 0) {
+  if (filteredQuizzes.length === 0) {
     return (
-      <div className="container mx-auto py-8 bg-[#1a124d] min-h-screen">
+      <>
+      <Header />
+      <div className="container mx-auto py-8 bg-[#1a124d] ">
         <div className="text-center">
           <h1 className="text-2xl font-bold mb-4 text-white">{t.noQuizzes}</h1>
           <p className="text-gray-300 mb-8">{t.noQuizzesDesc}</p>
         </div>
       </div>
+      <Footer />
+      </>
     )
   }
 
@@ -230,8 +250,8 @@ export default function QuizList() {
       <Header />
       {/* User Profile Section */}
       {loggedInUser && (
-        <div className="mb-6 sm:mb-8">
-          <Card className="border-0 bg-gradient-to-r from-emerald-500/20 to-teal-500/20 backdrop-blur-sm shadow-xl">
+        <div className=" sm:px-10 md:px-12 lg:px-28 py-2">
+          <Card className="border-0 bg-gradient-to-r from-emerald-500/20 to-teal-500/20 backdrop-blur-sm shadow-xl max-w-7xl mx-auto">
             <CardContent className="p-4 sm:p-6">
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div className="flex items-center gap-3 sm:gap-4 flex-1">
@@ -240,7 +260,7 @@ export default function QuizList() {
                   </div>
                   <div>
                     <h2 className="text-lg sm:text-xl font-bold text-white">
-                      {t.welcome}, {loggedInUser.name}! 👋
+                      {t.welcome}, {loggedInUser.name}
                     </h2>
                     <p className="text-emerald-200 text-sm sm:text-base">{t.ready}</p>
                   </div>
@@ -279,7 +299,7 @@ export default function QuizList() {
                 </div>
               )}
       <div className="grid sm:gap-2 md:grid-cols-2 lg:grid-cols-3 justify-items-center">
-        {quizzes.map((quiz) => (
+        {filteredQuizzes.map((quiz) => (
           <Card
             key={quiz._id}
             className="group relative overflow-hidden rounded-3xl border-0 bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-100  transition-all duration-500 w-full  m-2  hover:-translate-y-2 hover:rotate-1"
@@ -388,4 +408,12 @@ export default function QuizList() {
     </div>
    
   )
+}
+
+export default function QuizList() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <QuizListContent />
+    </Suspense>
+  );
 }

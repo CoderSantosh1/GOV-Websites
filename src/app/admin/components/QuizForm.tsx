@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm, ControllerRenderProps, FieldValues, UseFormStateReturn, ControllerFieldState } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -21,6 +21,8 @@ import { toast } from 'sonner';
 const quizSchema = z.object({
   title: z.string().min(1, 'Title is required'),
   description: z.string().min(1, 'Description is required'),
+  category: z.string().optional(),
+  subcategory: z.string().optional(),
   timeLimit: z.number().min(1, 'Time limit must be at least 1 minute'),
   totalMarks: z.number().min(0, 'Total marks must be at least 0'),
   questions: z.array(z.object({
@@ -51,17 +53,39 @@ type QuestionFormFieldRenderProps = {
 
 export default function QuizForm() {
   const [questions, setQuestions] = useState([{ text: '', options: ['', ''], correctAnswer: 0 }]);
-  
+  const [categories, setCategories] = useState<{ name: string; subcategories: { name: string; icon?: string }[] }[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [subcategoryOptions, setSubcategoryOptions] = useState<string[]>([]);
+
+  useEffect(() => {
+    // Fetch categories from API
+    fetch('/api/quiz-categories')
+      .then(res => res.json())
+      .then(data => setCategories(data));
+  }, []);
+
   const form = useForm<QuizFormValues>({
     resolver: zodResolver(quizSchema),
     defaultValues: {
       title: '',
       description: '',
+      category: '',
+      subcategory: '',
       timeLimit: 30,
       totalMarks: 0,
       questions: questions,
     },
   });
+
+  // Handle category change
+  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value;
+    setSelectedCategory(value);
+    form.setValue('category', value);
+    const found = categories.find((cat) => cat.name === value);
+    setSubcategoryOptions(found ? found.subcategories.map(sub => typeof sub === 'object' && sub !== null ? sub.name : sub) : []);
+    form.setValue('subcategory', '');
+  };
 
   const addQuestion = () => {
     setQuestions([...questions, { text: '', options: ['', ''], correctAnswer: 0 }]);
@@ -121,6 +145,43 @@ export default function QuizForm() {
               <FormLabel>Description</FormLabel>
               <FormControl>
                 <Textarea placeholder="Enter quiz description" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="category"
+          render={({ field, fieldState, formState }: FormFieldRenderProps<'category'>) => (
+            <FormItem>
+              <FormLabel>Category</FormLabel>
+              <FormControl>
+                <select {...field} onChange={handleCategoryChange} className="w-full border rounded p-2">
+                  <option value="">Select category</option>
+                  {categories.map((cat) => (
+                    <option key={cat.name} value={cat.name}>{cat.name}</option>
+                  ))}
+                </select>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="subcategory"
+          render={({ field, fieldState, formState }: FormFieldRenderProps<'subcategory'>) => (
+            <FormItem>
+              <FormLabel>Subcategory</FormLabel>
+              <FormControl>
+                <select {...field} className="w-full border rounded p-2">
+                  <option value="">Select subcategory</option>
+                  {subcategoryOptions.map((sub) => (
+                    <option key={sub} value={sub}>{sub}</option>
+                  ))}
+                </select>
               </FormControl>
               <FormMessage />
             </FormItem>
